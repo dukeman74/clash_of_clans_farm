@@ -129,7 +129,7 @@ Func snap($fname,$xi=738,$yi=80,$x2=890,$y2=110)
 EndFunc
 
 Func return_to_village_and_requeue()
-	mouse_click(473,418)
+	mouse_click(446,432)
 	block_until_match(26,420, 0xA84A10)
 	queue()
 EndFunc
@@ -193,7 +193,7 @@ Func spam_until_match($cx,$cy,$pixel)
 		$xoff=Random(0,$annoyance)
 		$yoff=Random(0,$annoyance)
 		MouseClick($MOUSE_CLICK_LEFT,$t[0]+$xoff,$t[1]+$yoff,1,0)
-		$annoyance+=0.05
+		$annoyance+=0.5
 		sleep(10)
 	WEnd
 EndFunc
@@ -208,7 +208,7 @@ Func block_until_match($cx,$cy,$pixel,$fallback=sad)
 	$myy=$cy+$y
 	While pixel_similarity(PixelGetColor($myx, $myy),$pixel)<.98
 		sleep(10)
-		if TimerDiff($timer) > 7000 Then
+		if TimerDiff($timer) > 4000 Then
 			return($fallback())
 		EndIf
 	WEnd
