@@ -203,7 +203,6 @@ Func sad()
 EndFunc
 
 Func block_until_match($cx,$cy,$pixel,$fallback=sad)
-	return($fallback())
 	$timer=TimerInit()
 	$myx=$cx+$x
 	$myy=$cy+$y
