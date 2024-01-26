@@ -1,3 +1,10 @@
+#Region ;**** Directives created by AutoIt3Wrapper_GUI ****
+#AutoIt3Wrapper_Icon=face.ico
+#AutoIt3Wrapper_Outfile=elixer farm x86.exe
+#AutoIt3Wrapper_Outfile_x64=elixer farm x64.exe
+#AutoIt3Wrapper_Compile_Both=y
+#AutoIt3Wrapper_UseX64=y
+#EndRegion ;**** Directives created by AutoIt3Wrapper_GUI ****
 #include <misc.au3>
 #include <Constants.au3>
 #include <MsgBoxConstants.au3>
@@ -46,7 +53,7 @@ If True Then ;initialize GUI and other variables
 	$writeout=""
 	$hand = WinGetHandle("Clash of Clans")
 	if @error <> 0 Then
-		$writeout="clash not running"
+		MsgBox($MB_SYSTEMMODAL, "clash not running", "launch clash of clans from google play on pc")
 		Quit()
 	EndIf
 	WinMove($hand,"",700,200,906,539)
