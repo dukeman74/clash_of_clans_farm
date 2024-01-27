@@ -1,5 +1,5 @@
 #Region ;**** Directives created by AutoIt3Wrapper_GUI ****
-#AutoIt3Wrapper_Icon=face.ico
+#AutoIt3Wrapper_Icon=icon.ico
 #AutoIt3Wrapper_Outfile=elixer farm x86.exe
 #AutoIt3Wrapper_Outfile_x64=elixer farm x64.exe
 #AutoIt3Wrapper_Compile_Both=y
@@ -56,7 +56,9 @@ If True Then ;initialize GUI and other variables
 		MsgBox($MB_SYSTEMMODAL, "clash not running", "launch clash of clans from google play on pc")
 		Quit()
 	EndIf
-	WinMove($hand,"",700,200,906,539)
+	$width=906
+	$height=539
+	WinMove($hand,"",700,200,$width,$height)
 	WinActivate($hand)
 
 EndIf
@@ -92,16 +94,46 @@ While True
 					ExitLoop
 				EndIf
 				queue()
+				if _IsPressed("1B",$dll) Then
+					ExitLoop
+				EndIf
 				mouse_click(224,481) ; click troop 1
 				sleep(50)
+				if _IsPressed("1B",$dll) Then
+					ExitLoop
+				EndIf
 				mouse_click(58,216) ; random placement
+				if _IsPressed("1B",$dll) Then
+					ExitLoop
+				EndIf
 				spam_until_match(76,397, 0xFC5D64) ; surrender button
+				if _IsPressed("1B",$dll) Then
+					ExitLoop
+				EndIf
 				mouse_click(62,401)
+				if _IsPressed("1B",$dll) Then
+					ExitLoop
+				EndIf
 				block_until_match(570,328, 0xDAF77E) ; okay to surrender
+				if _IsPressed("1B",$dll) Then
+					ExitLoop
+				EndIf
 				mouse_click(520,326)
+				if _IsPressed("1B",$dll) Then
+					ExitLoop
+				EndIf
 				block_until_match(495,458, 0x8BD43A) ; return home after loss screen
+				if _IsPressed("1B",$dll) Then
+					ExitLoop
+				EndIf
 				mouse_click(452,451)
+				if _IsPressed("1B",$dll) Then
+					ExitLoop
+				EndIf
 				block_until_match(26,420, 0xA84A10) ; attack square
+				if _IsPressed("1B",$dll) Then
+					ExitLoop
+				EndIf
 				finish_battle()
 				sleep(100)
 				$local_battles+=1
@@ -191,17 +223,30 @@ func finish_battle()
 	GUICtrlSetData($runtime,$str)
 EndFunc
 
+Func clamp($val, $min, $max)
+	if $val<$min Then
+		return $min
+	EndIf
+	if $val > $max Then
+		return $max
+	EndIf
+	return $val
+EndFunc
+
 Func spam_until_match($cx,$cy,$pixel)
 	$myx=$cx+$x
 	$myy=$cy+$y
 	$annoyance=0
 	$t=MouseGetPos()
 	While pixel_similarity(PixelGetColor($myx, $myy),$pixel)<.98
-		$xoff=Random(0,$annoyance)
-		$yoff=Random(0,$annoyance)
-		MouseClick($MOUSE_CLICK_LEFT,$t[0]+$xoff,$t[1]+$yoff,1,0)
+		$xoff=Random(-$annoyance,$annoyance)
+		$yoff=Random(-$annoyance,$annoyance)
+		MouseClick($MOUSE_CLICK_LEFT,clamp($t[0]+$xoff,$x,$x+$width),clamp($t[1]+$yoff,$y+60,$y+$height),1,0)
 		$annoyance+=0.5
 		sleep(10)
+		if $annoyance>16 and _IsPressed("1B",$dll) Then
+			Exit
+		EndIf
 	WEnd
 EndFunc
 
